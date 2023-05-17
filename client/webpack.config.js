@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 // TODO: Add and configure workbox plugins for a service worker and manifest file.
@@ -23,12 +24,12 @@ module.exports = () => {
         template: './index.html',
         title: 'Webpack Plugin',
       }),
-      new MiniCssExtractPlugin(),
+      // new MiniCssExtractPlugin(),
       new InjectManifest({
-        swSrc: './src/sw.js',
+        swSrc: './src-sw.js',
         swDest: 'service-worker.js',
       }),
-      new GenerateSW(),
+      // new GenerateSW(),
       new WebpackPwaManifest({
         name: 'Text Editor!!!',
         short_name: 'TE',
@@ -39,7 +40,7 @@ module.exports = () => {
         publicPath: './',
         icons: [
           {
-            src: path.resolve('assets/images/logo.png'),
+            src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
@@ -51,7 +52,7 @@ module.exports = () => {
       rules: [
         {
           test: /\.css$/i,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          use: ['style-loader', 'css-loader'],
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
